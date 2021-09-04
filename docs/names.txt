@@ -1,0 +1,37 @@
+Spectrum API Management System
+    Spectrum UI
+        Consumer UI
+        Provider UI
+        Support UI
+        Owner UI
+    Spectrum API Management
+        Provider Service (API Factory)
+        Consumer Service (APP Factory)
+        Support Service
+        Owner Service
+    Spectrum Data Distributor
+    Spectrum API Gateway
+    Spectrum Auth Provider
+
+
+Modules:
+Spectrum Core
+Spectrum Management Core
+    API Control
+    API Design
+Spectrum Distributed Storage
+    IMDG
+        Hazelcast Storage
+Spectrum Repository
+    JDBC Repository
+        PostgreSQL
+
+
+Core modules – entity системы, общие use-case, общий код.
+Consumer service -
+Provider service -
+Consumer UI -
+Provider UI -
+Owner & Support UI -
+API Gateway -
+Auth Provider -

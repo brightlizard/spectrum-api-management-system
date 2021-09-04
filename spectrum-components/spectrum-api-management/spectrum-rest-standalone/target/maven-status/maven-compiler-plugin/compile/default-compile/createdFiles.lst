@@ -1,0 +1,6 @@
+net/brightlizard/spectrum/rest/controllers/provider/ApiController.class
+net/brightlizard/spectrum/rest/controllers/provider/SpecificationController.class
+net/brightlizard/spectrum/rest/model/Api.class
+net/brightlizard/spectrum/rest/Application.class
+net/brightlizard/spectrum/rest/controllers/Tmp.class
+net/brightlizard/spectrum/rest/spring/RestConfiguration.class

@@ -1,0 +1,25 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /management
+
+spectrum:
+  management:
+    jdbc:
+      url: "jdbc:postgresql://localhost:5432/spectrum-api"
+      username: "postgres"
+      password: "qwerty99"
+      schema: "public"
+      pool:
+#        autoCommit:
+#        connectionTimeout:
+#        idleTimeout:
+#        maxLifetime:
+#        minIdle:
+#        maxPoolSize:
+        registerMbeans: false
+
+logging:
+  level:
+    org:
+      springframework: INFO

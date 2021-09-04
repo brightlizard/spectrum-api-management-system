@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spectrum-api-management-system</artifactId>
+        <groupId>net.brightlizard</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spectrum-modules</artifactId>
+    <packaging>pom</packaging>
+
+    <name>Spectrum Modules</name>
+    <description>System modules</description>
+    <modules>
+        <module>spectrum-core</module>
+        <module>spectrum-management-core</module>
+        <module>spectrum-distributed-storage</module>
+        <module>spectrum-repository</module>
+    </modules>
+
+</project>
