@@ -1,23 +1,17 @@
 package net.brightlizard.spectrum.repository.model;
 
-import javax.persistence.*;
 import java.util.Objects;
 
-//@Entity
-@Table(name ="apis", uniqueConstraints = @UniqueConstraint(columnNames = {"title", "version"}))
 public class Api {
 
-    @Id
     private String id;
 
     private String specId;
 
-    @Column(name = "title")
     private String title;
 
     private String description;
 
-    @Column(name = "version")
     private String version;
 
     public String getId() {

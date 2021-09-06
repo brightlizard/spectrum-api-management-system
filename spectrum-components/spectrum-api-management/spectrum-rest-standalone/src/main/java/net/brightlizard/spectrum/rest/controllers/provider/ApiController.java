@@ -4,6 +4,7 @@ import net.brightlizard.spectrum.repository.api.ApiRepository;
 import net.brightlizard.spectrum.repository.exceptions.TechnicalException;
 import net.brightlizard.spectrum.rest.error.ErrorHandler;
 import net.brightlizard.spectrum.rest.model.Api;
+import net.brightlizard.spectrum.rest.service.ApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ApiController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
 
     @Autowired
-    private ApiRepository apiRepository;
+    private ApiService apiService;
 
     @Autowired
     private ErrorHandler errorHandler;
@@ -35,9 +36,8 @@ public class ApiController {
     @GetMapping(
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<net.brightlizard.spectrum.repository.model.Api> getApis() throws TechnicalException {
-        Optional<List<net.brightlizard.spectrum.repository.model.Api>> apis = apiRepository.findAll();
-        return apis.orElse(new ArrayList<>());
+    public List<Api> getApis() throws TechnicalException {
+        return apiService.listApis();
     }
 
     @PostMapping(
@@ -45,15 +45,12 @@ public class ApiController {
         consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity createApi(@RequestBody Api newApi) {
+        // TODO: добавить создание апи совместно со спецификацией.
+        // TODO: написать тесты
         LOGGER.debug("NEW API -> {}", newApi);
 
         try {
-            net.brightlizard.spectrum.repository.model.Api repoApi = new net.brightlizard.spectrum.repository.model.Api();
-            repoApi.setTitle(newApi.getTitle());
-            repoApi.setVersion(newApi.getVersion());
-            repoApi.setDescription(newApi.getDescription());
-            repoApi.setSpecId(UUID.randomUUID().toString());
-            return new ResponseEntity<>(apiRepository.create(repoApi), HttpStatus.OK);
+            return new ResponseEntity<>(apiService.create(newApi), HttpStatus.OK);
         } catch (Exception e) {
             return errorHandler.get500ErrorResponseEntity(e);
         }

@@ -21,6 +21,16 @@ public class Api {
     @JsonProperty("version")
     private String version;
 
+    public Api() {
+    }
+
+    public Api(net.brightlizard.spectrum.repository.model.Api api) {
+        this.id = api.getId();
+        this.title = api.getTitle();
+        this.version = api.getVersion();
+        this.description = api.getDescription();
+    }
+
     public String getId() {
         return id;
     }
