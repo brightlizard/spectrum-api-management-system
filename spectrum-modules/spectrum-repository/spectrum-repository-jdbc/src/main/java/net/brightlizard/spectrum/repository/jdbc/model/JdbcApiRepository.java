@@ -6,8 +6,6 @@ import net.brightlizard.spectrum.repository.model.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,26 +66,21 @@ public class JdbcApiRepository extends JdbcAbstractRepository implements ApiRepo
     @Override
     public Api create(Api api) throws TechnicalException {
         LOGGER.debug("JdbcApiRepository.create({})", api);
-        try {
-            String SQL_COUNT = "SELECT count(*) FROM apis WHERE title = ? AND version = ?";
-            Integer count = jdbcTemplate.queryForObject(
-                                            SQL_COUNT,
-                                            new Object[]{api.getTitle(), api.getVersion()},
-                                            Integer.class);
 
-            if(count > 0){
-                LOGGER.info("ALREADY EXISTS");
-                throw new TechnicalException(String.format("Api with name \"%s\" [%s] already exists", api.getTitle(), api.getVersion()));
-            }
+        String SQL_COUNT = "SELECT count(*) FROM apis WHERE title = ? AND version = ?";
+        Integer count = jdbcTemplate.queryForObject(
+                                        SQL_COUNT,
+                                        new Object[]{api.getTitle(), api.getVersion()},
+                                        Integer.class);
 
-            String SQL = "INSERT INTO apis (id, title, version, description, specid) VALUES (?,?,?,?,?)";
-            String id = UUID.randomUUID().toString();
-            jdbcTemplate.update(SQL, id, api.getTitle(), api.getVersion(), api.getDescription(), api.getSpecId());
-            return findById(id).orElse(null);
-        } catch (final Exception ex) {
-            LOGGER.error("Failed to create api:", ex);
-            throw new TechnicalException("Failed to create api", ex);
+        if(count > 0){
+            throw new TechnicalException(String.format("Api with name \"%s\" [%s] already exists", api.getTitle(), api.getVersion()));
         }
+
+        String SQL = "INSERT INTO apis (id, title, version, description, specid) VALUES (?,?,?,?,?)";
+        String id = UUID.randomUUID().toString();
+        jdbcTemplate.update(SQL, id, api.getTitle(), api.getVersion(), api.getDescription(), api.getSpecId());
+        return findById(id).orElse(null);
     }
 
     @Override
