@@ -6,7 +6,7 @@ server:
 spectrum:
   management:
     jdbc:
-      url: "jdbc:postgresql://localhost:5432/spectrum-api"
+      url: "jdbc:postgresql://localhost:5432/spectrum"
       username: "postgres"
       password: "qwerty99"
       schema: "public"

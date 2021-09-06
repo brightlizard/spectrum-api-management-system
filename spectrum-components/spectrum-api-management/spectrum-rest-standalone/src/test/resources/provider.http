@@ -1,1 +1,13 @@
 GET http://localhost:8083/management/api
+
+
+###
+
+POST http://localhost:8083/management/api
+Content-Type: application/json
+
+{
+  "title": "Awesome new api",
+  "version": "1.0.0",
+  "description": "-"
+}

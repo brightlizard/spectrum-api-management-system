@@ -12,8 +12,10 @@
 
     <groupId>net.brightlizard</groupId>
     <artifactId>spectrum-api-management-system</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0</version>
+
+    <packaging>pom</packaging>
+
     <modules>
         <module>spectrum-components</module>
         <module>spectrum-modules</module>

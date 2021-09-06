@@ -9,12 +9,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 @Configuration
 @EnableWebMvc
-@Import(JdbcManagementRepositoryConfiguration.class)
 @ComponentScan(basePackages = {
-    "net.brightlizard.spectrum.rest",
-    "net.brightlizard.spectrum.repository",
-    "net.brightlizard.spectrum.repository.jdbc"
+    "net.brightlizard.spectrum.rest.*",
+    "net.brightlizard.spectrum.repository.*",
+    "net.brightlizard.spectrum.repository.jdbc.*"
 })
+@Import(JdbcManagementRepositoryConfiguration.class)
 public class RestConfiguration extends WebMvcConfigurationSupport {
 
 }

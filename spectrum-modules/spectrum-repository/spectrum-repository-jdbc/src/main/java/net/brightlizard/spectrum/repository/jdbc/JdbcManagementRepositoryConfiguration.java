@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * net.brightlizard (c)
  */
 @Configuration
-@ComponentScan(basePackages = { "net.brightlizard.spectrum.repository" })
+@ComponentScan(basePackages = { "net.brightlizard.spectrum.repository.*" })
 public class JdbcManagementRepositoryConfiguration extends AbstractJdbcRepositoryConfiguration {
 
 

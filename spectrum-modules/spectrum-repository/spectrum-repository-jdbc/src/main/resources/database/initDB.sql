@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS apis (
-    id UUID PRIMARY KEY,
+    id varchar(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     version VARCHAR(255) NOT NULL,
     description text NOT NULL,
-    specId UUID UNIQUE
+    specId VARCHAR(36) UNIQUE
 );

@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>net.brightlizard</groupId>
     <artifactId>spectrum-api-provider-service</artifactId>
+    <version>1.0.0</version>
 
     <name>Spectrum Component API Provider Service</name>
     <description>-</description>
