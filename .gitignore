@@ -23,6 +23,11 @@
 hs_err_pid*
 
 /target/
+*/target/*
+*/target/**
+**/target/*
+*/**/target
+**/*/target
 .idea/
 .settings
 .project
