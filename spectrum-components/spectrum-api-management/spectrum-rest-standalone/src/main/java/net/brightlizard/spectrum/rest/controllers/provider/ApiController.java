@@ -53,15 +53,26 @@ public class ApiController {
     }
 
     @PostMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+        path = "/{id}",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    @RequestMapping("/{id}")
     public ResponseEntity updateApi(@RequestBody ApiEntity api, @PathVariable String id) {
         LOGGER.debug("UPDATED API -> {}", api);
 
         try {
             return new ResponseEntity<>(apiService.update(id, api), HttpStatus.OK);
+        } catch (Exception e) {
+            return errorHandler.get500ErrorResponseEntity(e);
+        }
+
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deleteApi(@PathVariable String id) {
+        try {
+            apiService.delete(id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return errorHandler.get500ErrorResponseEntity(e);
         }

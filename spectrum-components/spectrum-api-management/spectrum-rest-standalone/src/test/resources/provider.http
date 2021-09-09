@@ -24,3 +24,8 @@ Content-Type: application/json
   "description": "-",
   "context_path": "/cool/v3"
 }
+
+###
+
+DELETE http://localhost:8083/management/api/f4f3e85b-3539-4f68-ac77-3529636b7bde
+Content-Type: application/json

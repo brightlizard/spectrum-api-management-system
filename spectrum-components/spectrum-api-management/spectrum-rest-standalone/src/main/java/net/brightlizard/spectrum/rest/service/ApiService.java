@@ -13,5 +13,5 @@ public interface ApiService {
     List<ApiEntity> listApis() throws TechnicalException;
     ApiEntity create(ApiEntity newApi) throws TechnicalException;
     ApiEntity update(String id, ApiEntity api) throws TechnicalException;
-
+    void delete(String id) throws TechnicalException;
 }

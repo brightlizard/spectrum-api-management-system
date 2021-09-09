@@ -49,6 +49,11 @@ public class ApiServiceImpl implements ApiService {
         return new ApiEntity(apiRepository.update(repoApi));
     }
 
+    @Override
+    public void delete(String id) throws TechnicalException {
+        apiRepository.delete(id);
+    }
+
     private Api convert(String id, ApiEntity api) {
         Api convertedApi = convert(api);
         convertedApi.setId(id);
