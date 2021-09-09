@@ -1,9 +1,8 @@
 package net.brightlizard.spectrum.rest.controllers.provider;
 
-import net.brightlizard.spectrum.repository.api.ApiRepository;
 import net.brightlizard.spectrum.repository.exceptions.TechnicalException;
 import net.brightlizard.spectrum.rest.error.ErrorHandler;
-import net.brightlizard.spectrum.rest.model.Api;
+import net.brightlizard.spectrum.rest.model.ApiEntity;
 import net.brightlizard.spectrum.rest.service.ApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Ovcharov Ilya (ovcharov.ilya@gmail.com)
@@ -36,7 +32,7 @@ public class ApiController {
     @GetMapping(
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Api> getApis() throws TechnicalException {
+    public List<ApiEntity> getApis() throws TechnicalException {
         return apiService.listApis();
     }
 
@@ -44,7 +40,7 @@ public class ApiController {
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity createApi(@RequestBody Api newApi) {
+    public ResponseEntity createApi(@RequestBody ApiEntity newApi) {
         // TODO: добавить создание апи совместно со спецификацией.
         // TODO: написать тесты
         LOGGER.debug("NEW API -> {}", newApi);
@@ -54,6 +50,22 @@ public class ApiController {
         } catch (Exception e) {
             return errorHandler.get500ErrorResponseEntity(e);
         }
+    }
+
+    @PostMapping(
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @RequestMapping("/{id}")
+    public ResponseEntity updateApi(@RequestBody ApiEntity api, @PathVariable String id) {
+        LOGGER.debug("UPDATED API -> {}", api);
+
+        try {
+            return new ResponseEntity<>(apiService.update(id, api), HttpStatus.OK);
+        } catch (Exception e) {
+            return errorHandler.get500ErrorResponseEntity(e);
+        }
+
     }
 
 

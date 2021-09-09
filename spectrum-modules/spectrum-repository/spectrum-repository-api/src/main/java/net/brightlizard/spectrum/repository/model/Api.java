@@ -14,6 +14,8 @@ public class Api {
 
     private String version;
 
+    private String contextPath;
+
     public String getId() {
         return id;
     }
@@ -54,6 +56,14 @@ public class Api {
         this.version = version;
     }
 
+    public String getContextPath() {
+        return contextPath;
+    }
+
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,12 +73,13 @@ public class Api {
                 Objects.equals(specId, api.specId) &&
                 Objects.equals(title, api.title) &&
                 Objects.equals(description, api.description) &&
-                Objects.equals(version, api.version);
+                Objects.equals(version, api.version) &&
+                Objects.equals(contextPath, api.contextPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, specId, title, description, version);
+        return Objects.hash(id, specId, title, description, version, contextPath);
     }
 
     @Override

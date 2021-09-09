@@ -1,6 +1,0 @@
-net/brightlizard/spectrum/repository/model/Api.class
-net/brightlizard/spectrum/repository/exceptions/TechnicalException.class
-net/brightlizard/spectrum/repository/Tmp.class
-net/brightlizard/spectrum/repository/api/CrudRepository.class
-net/brightlizard/spectrum/repository/api/ListRepository.class
-net/brightlizard/spectrum/repository/api/ApiRepository.class

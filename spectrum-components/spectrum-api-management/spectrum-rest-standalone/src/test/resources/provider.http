@@ -7,7 +7,20 @@ POST http://localhost:8083/management/api
 Content-Type: application/json
 
 {
-  "title": "Token API",
+  "title": "Cool API",
   "version": "1.0.0",
-  "description": "-"
+  "description": "-",
+  "context_path": "/cool/v1"
+}
+
+###
+
+POST http://localhost:8083/management/api/f121adc9-cc88-4ec8-a189-b8d78f67bdb6
+Content-Type: application/json
+
+{
+  "title": "Cool API",
+  "version": "1.0.0",
+  "description": "-",
+  "context_path": "/cool/v3"
 }

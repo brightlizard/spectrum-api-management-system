@@ -1,14 +1,14 @@
 package net.brightlizard.spectrum.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import net.brightlizard.spectrum.repository.model.Api;
 import java.util.Objects;
 
 /**
  * @author Ovcharov Ilya (ovcharov.ilya@gmail.com)
  * net.brightlizard (c)
  */
-public class Api {
+public class ApiEntity {
     @JsonProperty("id")
     private String id;
 
@@ -21,14 +21,18 @@ public class Api {
     @JsonProperty("version")
     private String version;
 
-    public Api() {
+    @JsonProperty("context_path")
+    private String contextPath;
+
+    public ApiEntity() {
     }
 
-    public Api(net.brightlizard.spectrum.repository.model.Api api) {
+    public ApiEntity(Api api) {
         this.id = api.getId();
         this.title = api.getTitle();
         this.version = api.getVersion();
         this.description = api.getDescription();
+        this.contextPath = api.getContextPath();
     }
 
     public String getId() {
@@ -63,29 +67,28 @@ public class Api {
         this.version = version;
     }
 
+    public String getContextPath() {
+        return contextPath;
+    }
+
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Api api = (Api) o;
-        return Objects.equals(id, api.id) &&
-                Objects.equals(title, api.title) &&
-                Objects.equals(description, api.description) &&
-                Objects.equals(version, api.version);
+        ApiEntity apiEntity = (ApiEntity) o;
+        return Objects.equals(id, apiEntity.id) &&
+                Objects.equals(title, apiEntity.title) &&
+                Objects.equals(description, apiEntity.description) &&
+                Objects.equals(version, apiEntity.version) &&
+                Objects.equals(contextPath, apiEntity.contextPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, version);
-    }
-
-    @Override
-    public String toString() {
-        return "Api{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", version='" + version + '\'' +
-                '}';
+        return Objects.hash(id, title, description, version, contextPath);
     }
 }

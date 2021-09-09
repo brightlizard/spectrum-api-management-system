@@ -1,7 +1,0 @@
-net/brightlizard/spectrum/repository/jdbc/model/TransactionalRepository.class
-net/brightlizard/spectrum/repository/jdbc/model/JdbcApiRepository$ApiRowMapper.class
-net/brightlizard/spectrum/repository/jdbc/Tmp.class
-net/brightlizard/spectrum/repository/jdbc/model/JdbcAbstractRepository.class
-net/brightlizard/spectrum/repository/jdbc/common/AbstractJdbcRepositoryConfiguration.class
-net/brightlizard/spectrum/repository/jdbc/JdbcManagementRepositoryConfiguration.class
-net/brightlizard/spectrum/repository/jdbc/model/JdbcApiRepository.class

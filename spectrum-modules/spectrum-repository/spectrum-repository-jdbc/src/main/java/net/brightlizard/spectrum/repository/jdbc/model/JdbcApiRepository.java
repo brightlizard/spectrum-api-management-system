@@ -31,8 +31,18 @@ public class JdbcApiRepository extends JdbcAbstractRepository implements ApiRepo
             api.setTitle(resultSet.getString("title"));
             api.setVersion(resultSet.getString("version"));
             api.setDescription(resultSet.getString("description"));
+            api.setContextPath(resultSet.getString("context_path"));
             api.setSpecId(resultSet.getString("specId"));
             return api;
+        }
+
+    }
+
+    public class ContextPathMapper implements RowMapper<String> {
+
+        @Override
+        public String mapRow(ResultSet resultSet, int i) throws SQLException {
+            return resultSet.getString("context_path");
         }
 
     }
@@ -46,7 +56,7 @@ public class JdbcApiRepository extends JdbcAbstractRepository implements ApiRepo
             return Optional.ofNullable(apis);
         } catch (final Exception ex) {
             LOGGER.error("Failed to find all apis:", ex);
-            throw new TechnicalException("Failed to find all apis", ex);
+            throw new TechnicalException(ex.getMessage(), ex);
         }
     }
 
@@ -58,38 +68,86 @@ public class JdbcApiRepository extends JdbcAbstractRepository implements ApiRepo
             Api api = jdbcTemplate.queryForObject(SQL, new Object[]{id}, new ApiRowMapper());
             return Optional.ofNullable(api);
         } catch (final Exception ex) {
-            LOGGER.error("Failed to find apis by id:", ex);
-            throw new TechnicalException("Failed to find api by id", ex);
+            LOGGER.error("Failed to find api by id:", ex);
+            throw new TechnicalException(String.format("Failed to find api by id = %d", id), ex);
         }
     }
 
     @Override
     public Api create(Api api) throws TechnicalException {
         LOGGER.debug("JdbcApiRepository.create({})", api);
-
-        String SQL_COUNT = "SELECT count(*) FROM apis WHERE title = ? AND version = ?";
-        Integer count = jdbcTemplate.queryForObject(
-                                        SQL_COUNT,
-                                        new Object[]{api.getTitle(), api.getVersion()},
-                                        Integer.class);
-
-        if(count > 0){
-            throw new TechnicalException(String.format("Api with name \"%s\" [%s] already exists", api.getTitle(), api.getVersion()));
+        try {
+            String SQL = "INSERT INTO apis (id, title, version, description, context_path, specid) VALUES (?,?,?,?,?,?)";
+            String id = UUID.randomUUID().toString();
+            jdbcTemplate.update(SQL, id, api.getTitle(), api.getVersion(), api.getDescription(), api.getContextPath(), api.getSpecId());
+            return findById(id).orElse(null);
+        } catch (final Exception ex) {
+            LOGGER.error("Failed to create an api:", ex);
+            throw new TechnicalException(ex.getMessage(), ex);
         }
-
-        String SQL = "INSERT INTO apis (id, title, version, description, specid) VALUES (?,?,?,?,?)";
-        String id = UUID.randomUUID().toString();
-        jdbcTemplate.update(SQL, id, api.getTitle(), api.getVersion(), api.getDescription(), api.getSpecId());
-        return findById(id).orElse(null);
     }
 
     @Override
-    public Api update(Api item) throws TechnicalException {
-        return null;
+    public Api update(Api api) throws TechnicalException {
+        LOGGER.debug("JdbcApiRepository.update({})", api);
+        try {
+            String SQL = "UPDATE apis SET title = ?, version = ?, description = ?, context_path = ? WHERE id = ?";
+            jdbcTemplate.update(SQL, api.getTitle(), api.getVersion(), api.getDescription(), api.getContextPath(), api.getId());
+            return findById(api.getId()).orElse(null);
+        } catch (final Exception ex) {
+            LOGGER.error("Failed to update an api:", ex);
+            throw new TechnicalException(ex.getMessage(), ex);
+        }
     }
 
     @Override
-    public void delete(String s) throws TechnicalException {
+    public boolean delete(String id) throws TechnicalException {
+        LOGGER.debug("JdbcApiRepository.delete({})", id);
+        try {
+            String SQL = "DELETE FROM apis WHERE id = ?";
+            return jdbcTemplate.update(SQL, id) == 1;
+        } catch (final Exception ex) {
+            LOGGER.error("Failed to delete an api:", ex);
+            throw new TechnicalException(ex.getMessage(), ex);
+        }
+    }
 
+    @Override
+    public List<String> findContextPaths(String v) throws TechnicalException {
+        LOGGER.debug("JdbcApiRepository.findContextPaths({})", v);
+        try {
+            String SQL = "SELECT context_path FROM apis WHERE context_path LIKE ?";
+            List paths = jdbcTemplate.query(SQL, new Object[]{ v + "%" }, new ContextPathMapper());
+            return paths;
+        } catch (final Exception ex) {
+            LOGGER.error("Failed to find context paths:", ex);
+            throw new TechnicalException(ex.getMessage(), ex);
+        }
+    }
+
+    @Override
+    public Optional<String> findContextPathById(String id) throws TechnicalException {
+        LOGGER.debug("JdbcApiRepository.findContextPathById({})", id);
+        try {
+            String SQL = "SELECT context_path FROM apis WHERE id = ?";
+            String path = jdbcTemplate.queryForObject(SQL, new Object[]{ id }, new ContextPathMapper());
+            return Optional.ofNullable(path);
+        } catch (final Exception ex) {
+            LOGGER.error("Failed to find context path by id:", ex);
+            throw new TechnicalException(String.format("Failed to find context by id = %d", id), ex);
+        }
+    }
+
+    @Override
+    public List<Api> findByTitleAndVersion(String title, String version) throws TechnicalException {
+        LOGGER.debug("JdbcApiRepository.findByNameAndVersion({}, {})", title, version);
+        try {
+            String SQL = "SELECT * FROM apis WHERE title = ? AND version = ?";
+            List<Api> apis = jdbcTemplate.query(SQL, new Object[]{title, version}, new ApiRowMapper());
+            return apis;
+        } catch (final Exception ex) {
+            LOGGER.error("Failed to find api by title and version:", ex);
+            throw new TechnicalException(ex.getMessage(), ex);
+        }
     }
 }
